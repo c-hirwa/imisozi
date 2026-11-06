@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "@fontsource-variable/schibsted-grotesk/wght.css";
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --color-basalt: #1c2b2d;
+  --color-basalt-soft: #3d4f52;
+  --color-jac: #6e4fd8;        /* jacaranda: Kigali's purple trees */
+  --color-jac-deep: #5638b8;
+  --color-jac-soft: #ece7fb;
+  --color-sage: #dce7e1;
+  --color-mist: #f2f4f3;
+  --color-line: #e2e6e4;
+  --color-sun: #f4b740;
+  --color-muted: #66756f;
+  --font-sans: "Schibsted Grotesk Variable", system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: #fff; color: var(--color-basalt); font-family: var(--font-sans); }
+:focus-visible { outline: 3px solid var(--color-jac); outline-offset: 2px; border-radius: 6px; }
+.tnum { font-feature-settings: "lnum"; } /* this face spaces commas oddly with tnum, so keep proportional figures */
+
+/* map price pins */
+.pin-wrap { background: none; border: 0; }
+.pin {
+  transform: translate(-50%, -100%); display: inline-block; white-space: nowrap;
+  padding: 4px 9px; border-radius: 999px; font: 700 12px/1.2 var(--font-sans);
+  background: #fff; color: var(--color-basalt); border: 1.5px solid var(--color-basalt);
+  box-shadow: 0 2px 6px rgb(0 0 0 / .18); cursor: pointer; transition: transform .15s, background .15s;
+}
+.pin.sale { border-color: var(--color-jac); }
+.pin:hover, .pin.active { background: var(--color-jac); color: #fff; border-color: var(--color-jac); transform: translate(-50%, -100%) scale(1.12); z-index: 1000; }
+.pin.off { opacity: .55; }
+.leaflet-container { font-family: var(--font-sans); background: var(--color-mist); }
+
+@keyframes up { from { transform: translateY(16px); opacity: 0 } to { transform: none; opacity: 1 } }
+.rise { animation: up .45s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+.fade-in { animation: fade .2s ease both; }
+@keyframes pop { 50% { transform: scale(1.25) } }
+.pop { animation: pop .3s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
